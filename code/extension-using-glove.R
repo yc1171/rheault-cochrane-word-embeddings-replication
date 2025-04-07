@@ -135,7 +135,7 @@ word_vectors <- fit_glove + t(context)
 # Each row is a word in the vocab; each col is a dimension (1..100).
 
 # Save the embeddings for future use
-saveRDS(word_vectors, file = "data/tweet_word_vectors.rds")
+saveRDS(word_vectors, file = "data/tweet_word_vectors_glove.rds")
 
 # =====================================================
 #  STEP 5: Create User-Level Embeddings
@@ -252,7 +252,7 @@ pca_plot <- ggplot(scores, aes(x = PC1, y = PC2, color = party)) +
 print(pca_plot)
 
 # Save the plot
-ggsave("output/twitter_pca_plot.png", pca_plot, width = 10, height = 8)
+ggsave("output/twitter_glove_pca_plot.png", pca_plot, width = 10, height = 8)
 
 # =====================================================
 #  STEP 8: Identifying Extreme Words on PC1
@@ -313,7 +313,7 @@ extreme_words_plot <- ggplot(extreme_words_df, aes(x = score, y = reorder(word, 
 print(extreme_words_plot)
 
 # Save the extreme words plot
-ggsave("output/twitter_extreme_words.png", extreme_words_plot, width = 12, height = 8)
+ggsave("output/twitter_glove_extreme_words_pc1.png", extreme_words_plot, width = 12, height = 8)
 
 # =====================================================
 #  STEP 9: Examine Most Extreme Words on PC2
@@ -375,7 +375,7 @@ extreme_words_pc2_plot <- ggplot(extreme_words_pc2_df, aes(x = score, y = reorde
 print(extreme_words_pc2_plot)
 
 # Save the extreme words plot for PC2
-ggsave("output/twitter_extreme_words_pc2.png", extreme_words_pc2_plot, width = 12, height = 8)
+ggsave("output/twitter_glove_extreme_words_pc2.png", extreme_words_pc2_plot, width = 12, height = 8)
 
 # =====================================================
 #  STEP 10: Identify Extreme Users 
@@ -413,19 +413,4 @@ extreme_users_plot <- ggplot(scores, aes(x = PC1, y = PC2, color = party)) +
 print(extreme_users_plot)
 
 # Save the extreme users plot
-ggsave("output/twitter_extreme_users.png", extreme_users_plot, width = 10, height = 8)
-
-
-# =====================================================
-#  STEP 11: Save Results and Report Summary
-# =====================================================
-
-# Create a summary table of the PCA results
-pca_summary_table <- data.frame(
-  Component = paste0("PC", 1:5),
-  Variance_Explained = summary(pca_model)$importance[2, 1:5] * 100,
-  Cumulative_Variance = summary(pca_model)$importance[3, 1:5] * 100
-)
-
-# Print summary table
-print(pca_summary_table)
+ggsave("output/twitter_glove_extreme_users.png", extreme_users_plot, width = 10, height = 8)
