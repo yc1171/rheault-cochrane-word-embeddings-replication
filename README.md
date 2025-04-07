@@ -89,3 +89,42 @@ The models (`house200`, `uk200`) should be placed in the `models/` folder.
 If you use this code, please cite:
 
 > Rheault, L., & Cochrane, C. (2020). *Word Embeddings for the Analysis of Ideological Placement in Parliamentary Corpora*. Political Analysis, 28(1), 112--133.
+>
+> 
+---
+
+## Extension: Analyzing Congressional Tweets with Word Embeddings
+
+In addition to replicating the original paper’s results using parliamentary speech, this project includes an **extension using U.S. Congressional Twitter data**.
+
+### Motivation
+
+This extension tests whether word embeddings derived from **informal political text** (tweets) can reveal similar ideological patterns as formal legislative speeches.
+
+### Method
+
+- **Corpus**: Tweets from U.S. Congress members.
+- **Model**: A custom-trained Doc2Vec model using tweet text.
+- **User Embedding**: Each legislator's tweets are averaged to create a single "user vector."
+- **PCA**: Principal Component Analysis is applied to user vectors to visualize ideological and stylistic variation.
+
+### Key Findings
+
+- **PC1 (Ideology)**: The first principal component captures the **left-right political spectrum** among legislators.
+- **PC2 (Style)**: The second component captures stylistic variation (e.g., personal vs. policy tone).
+- **Word Projections**: Words most strongly associated with ideological extremes are identified using PCA loadings.
+
+For example:
+- Right-end words: `"demtaxhikes"`, `"huckabee"`, `"deductio"`
+- Left-end words: `"covid"`, `"help"`, `"americans"`
+
+### Limitations & Considerations
+
+- Results are more **noisy** than the original paper due to limited preprocessing.
+- **GloVe-style co-occurrence vectors** are less tailored than party-specific embeddings.
+- Cleaning and metadata-aware modeling could improve future performance.
+
+### Value
+
+This shows that **unsupervised embedding models can extract ideological dimensions** even from short, informal texts like tweets, suggesting a broader applicability of these methods beyond formal parliamentary debate.
+
