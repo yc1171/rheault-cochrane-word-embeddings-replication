@@ -1,10 +1,10 @@
-# README: Main Replication Script for Rheault & Cochrane (2020) Replication
+# Word Embeddings for Ideological Placement: Replication and Extension
 
 This repository contains the main replication code for the paper **"Word Embeddings for the Analysis of Ideological Placement in Parliamentary Corpora"** by Rheault and Cochrane (2020, *Political Analysis*). The main script extracts word embeddings from pre-trained models, performs PCA, visualizes party placements, and validates ideological scores against multiple external benchmarks.
 
 ## Overview
 
-The paper explores whether neural network-based word embeddings, augmented with political metadata, can effectively capture latent ideological positions in political text. Using parliamentary speeches from the **United States**, **Britain**, and **Canada**, it trains models with party-year labels to produce "party embeddings." These embeddings are analyzed using PCA and validated against external indicators like roll-call votes, expert surveys, and the Comparative Manifesto Project (CMP).
+The original paper explores whether neural network-based word embeddings, augmented with political metadata, can effectively capture latent ideological positions in political text. Using parliamentary speeches from the **United States**, **Britain**, and **Canada**, it trains models with party-year labels to produce "party embeddings." These embeddings are analyzed using PCA and validated against external indicators like roll-call votes, expert surveys, and the Comparative Manifesto Project (CMP).
 
 Our project:
 
@@ -13,6 +13,7 @@ Our project:
 
 ## Repository Structure
 
+- `code/`: Contains the main replication scripts and extension scripts, which include:
 - `Main-Replication.R`: Replicates the paper's core findings
 - `Extension-Using-GloVe.R`: Applies GloVe embeddings to congressional tweets
 - `Extension-Using-Doc2Vec.R`: Implements a Doc2Vec approach similar to the original paper
