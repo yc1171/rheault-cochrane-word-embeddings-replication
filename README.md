@@ -35,32 +35,37 @@ The replication validates these results against external benchmarks including (a
 The `Main-Replication.R` script includes the following core components:
 
 ### 1. Environment Setup
+- Uses `reticulate` to bridge R and Python
+- Configures Python environment with the path to required virtual environment
+- Loads necessary R libraries
 
--   Uses `reticulate` to bridge R and Python.
--   Specifies Python path and verifies configuration.
+### 2. UK Parliament Analysis
+- Loads the pre-trained `uk200` model and extracts U.K. party-year embeddings
+- Performs PCA on party embeddings and creates visualizations
+- Maps party tags to years for chronological analysis
+- Creates visualizations showing party movement over time
 
-### 2. Embedding Extraction
+### 3. US Congress Analysis
+- Loads the pre-trained `house200` model and extracts party embeddings and metadata
+- Maps Congress numbers to years and party affiliations
+- Runs PCA to produce two-dimensional projections
+- Creates visualizations showing:
+  - Two-dimensional party placement
+  - First dimension (ideology) time series
+  - Second dimension (regional) time series
 
--   **`extract_us_house_vectors()`**: Loads the pre-trained `house200` Doc2Vec model and extracts party embeddings and metadata.
--   **`extract_uk_vectors()`**: Loads `uk200` model and extracts U.K. party-year embeddings.
-
-### 3. PCA Analysis and Visualization
-
--   **`analyze_us_house()`**: Performs PCA on U.S. embeddings, orients axes, and creates:
-    -   A 2D projection (party placements)
-    -   PC1 and PC2 time-series plots
--   **`analyze_uk_parliament()`**: PCA and visualization for U.K. parties, highlighting ideological and temporal trends.
-
-### 4. Validation
-
--   **`validate_us_house()`**: Correlates PCA-derived scores with Voteview, expert survey, and CMP scores.
--   **`validate_uk_parliament()`**: Validates U.K. projections using expert and manifesto data.
+### 4. Validation and Interpretation
+- Projects words onto principal components to interpret dimensions
+- Validates party placements against gold standards including:
+  - Expert surveys
+  - CMP-based measures (Rile, Vanilla, Legacy)
+  - DW-NOMINATE scores (for US Congress)
 
 ### 5. Output Generation
 
 -   Saves:
-    -   US plots as `output/us_house_plots.pdf`
-    -   UK plot as `output/uk_parliament_plot.pdf`
+    -   US plots as `output/figure2_us_house.pdf`
+    -   UK plot as `output/uk_party_placement_improved.pdf`
     -   Validation results as CSV files
     -   (Optional) `wordfish_comparison.pdf`
 
@@ -68,18 +73,33 @@ The `Main-Replication.R` script includes the following core components:
 
 Runs the full pipeline: extraction → PCA → validation → export.
 
+## Required Files
 
-## Data Needed
+The replication requires several files and directories:
 
-The following files must be present in the `data/` directory:
+### Pre-trained Models (in `models/` directory)
+- `uk200`: Pre-trained Doc2Vec model for UK Parliament
+- `house200`: Pre-trained Doc2Vec model for US House of Representatives
+- `twitter_users_pvdm.model`: Our trained model for Twitter extension
 
--   `dw_nominate_house.csv`
--   `expert_surveys_us.csv`
--   `cmp_us.csv`
--   `goldstandard_uk.csv`
+### Data Files (in `data/` directory)
+- `tweets_congress.csv`: Congressional tweets for extension
+- Party vector files:
+  - `uk_party_vectors.csv`
+  - `house_party_vectors.csv`
+  - `us_house_tag_years.csv`
+- Validation data:
+  - `goldstandard_uk.csv`
+  - `goldstandard_house.csv`
+  - `goldstandard_senate.csv`
 
-The models (`house200`, `uk200`) should be placed in the `models/` folder.
-
+### Output Files (generated during replication)
+- Vector projections:
+  - `PC1_vector.csv`, `PC2_vector.csv`
+  - `extreme_words_pc1.csv`, `extreme_words_pc2.csv`
+- Twitter embeddings:
+  - `twitter_user_vectors_pvdm.csv`
+  - `twitter_user_vectors.csv`
 
 ## Extension: Analyzing Congressional Tweets with Word Embeddings
 
